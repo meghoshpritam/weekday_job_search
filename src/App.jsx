@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Container from '@mui/material/Container';
 import { useDispatch } from 'react-redux';
 import { getJobs } from '@/services/job.service';
-import { stopLoading, startLoading } from '@/reducer/job';
+import { stopLoading, startLoading, addJobs } from '@/reducer/job';
 import JobsContainer from '@/components/JobsContainer';
 
 function App() {
@@ -13,6 +13,12 @@ function App() {
     getJobs()
       .then((data) => {
         console.log('📢[App.jsx:15]: data: ', data);
+        dispatch(
+          addJobs({
+            jobs: data.jdList,
+            availableNumberOfJobs: data.totalCount,
+          }),
+        );
       })
       .catch((error) => {})
       .finally(() => {

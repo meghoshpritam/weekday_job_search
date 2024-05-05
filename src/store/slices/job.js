@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   jobs: [],
-  loading: false,
+  loading: true,
+  availableNumberOfJobs: 0,
   filter: {
     minExperience: '',
     companyName: '',
@@ -27,10 +28,15 @@ export const jobSlice = createSlice({
       ...state,
       loading: false,
     }),
+    addJobs: (state, action) => ({
+      ...state,
+      jobs: [...state.jobs, ...(action.payload?.jobs || [])],
+      availableNumberOfJobs: action.payload.availableNumberOfJobs || state.availableNumberOfJobs || 0,
+    }),
   },
 });
 
-export const { startLoading, stopLoading } = jobSlice.actions;
+export const { startLoading, stopLoading, addJobs } = jobSlice.actions;
 
 export const jobState = (state) => state.job;
 
