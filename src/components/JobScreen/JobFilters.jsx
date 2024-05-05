@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import {
   jobState,
+  setFilterCompanyName,
   setFilterLocation,
   setFilterMinBasePay,
   setFilterMinExperience,
@@ -10,6 +11,7 @@ import {
   setFilterRole,
 } from '@/reducer/job';
 import { useDispatch, useSelector } from 'react-redux';
+import { searchStringInArray } from '@/helpers/stringSearch.helper';
 
 function capitalizeText(text) {
   const spites = text?.split(' ') || [];
@@ -34,6 +36,35 @@ function SelectComponent({ label, multiple = false, sx = {}, options = [], value
       {...props}
       // eslint-disable-next-line react/jsx-props-no-spreading
       renderInput={(params) => <TextField size="small" {...params} label={label} />}
+    />
+  );
+}
+
+function SelectWithCustomInput({ label, sx = {}, options = [], value, onChange, ...props }) {
+  const [inputValue, setInputValue] = useState('');
+  const allOptions = [...options, ...(inputValue?.length > 0 ? [inputValue] : [])];
+
+  const onChangeHandler = (event) => {
+    if (event.target.value?.length > 0 && searchStringInArray(event.target.value, options)?.length === 0) {
+      setInputValue(() => event.target.value);
+    } else {
+      setInputValue(() => '');
+    }
+  };
+
+  return (
+    <SelectComponent
+      label={label}
+      sx={sx}
+      options={allOptions}
+      value={value}
+      onInput={onChangeHandler}
+      onChange={(event, newValue) => {
+        onChange(event, newValue);
+        setInputValue(() => '');
+      }}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
     />
   );
 }
@@ -119,8 +150,23 @@ function JobFilters() {
         onChange={(_, newValue) => {
           dispatch(setFilterMinBasePay(newValue));
         }}
-        getOptionLabel={(option) => (option === -1 ? '' : `${option}`)}
+        getOptionLabel={(option) => (option === -1 ? '' : `${option}`)} // TODO"
         options={jobDetails?.filterOptions?.minBasePay || []}
+      />
+
+      <SelectWithCustomInput
+        label="Company"
+        sx={{
+          minWidth: 240,
+          mr: 3,
+        }}
+        disabled={(jobDetails?.filterOptions?.companyName || [])?.length === 0}
+        value={jobDetails?.filter?.companyName || ''}
+        onChange={(_, newValue) => {
+          dispatch(setFilterCompanyName(newValue));
+        }}
+        getOptionLabel={(option) => capitalizeText(option)}
+        options={jobDetails?.filterOptions?.companyName || []}
       />
     </div>
   );

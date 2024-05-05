@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import Grid from '@mui/material/Grid';
 import { jobState } from '@/reducer/job';
 import { JOB_LIMIT_PER_REQUEST } from '@/services/job.service';
+import { searchStringInArray } from '@/helpers/stringSearch.helper';
 import JobCard from './JobCard';
 import JobCardSkeleton from './JobCardSkeleton';
 
@@ -35,6 +36,10 @@ const filterJobs = (jobs, filter) => {
 
       if (show && filter.minBasePay > 0) {
         show = job.minJdSalary && job.minJdSalary >= filter.minBasePay;
+      }
+
+      if (show && filter.companyName.length > 0) {
+        show = searchStringInArray(job.companyName, [filter.companyName]).length > 0;
       }
 
       return show;

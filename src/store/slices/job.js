@@ -53,15 +53,17 @@ export const jobSlice = createSlice({
           return !jobIdsMap[job.jdUid];
         }) || [];
 
-      const newRoles = [];
+      const newCompanies = [];
       const newLocations = [];
-      let maxExp = state.filterOptions.minExperience?.[state.filterOptions.minExperience.length - 1] || 1;
+      const newRoles = [];
       const minBasePay = [];
+      let maxExp = state.filterOptions.minExperience?.[state.filterOptions.minExperience.length - 1] || 1;
 
       // eslint-disable-next-line no-restricted-syntax
       for (const job of newJobs) {
         newRoles.push(job.jobRole.toLowerCase());
         newLocations.push(job.location.toLowerCase());
+        newCompanies.push(job.companyName);
 
         if (job.minExp && job.minExp > maxExp) {
           maxExp = job.minExp;
@@ -84,6 +86,9 @@ export const jobSlice = createSlice({
             .sort((a, b) => a.localeCompare(b)),
           minExperience: createNElemArray(maxExp),
           minBasePay: getUniqueValues(combineArrays(state.filterOptions.minBasePay, minBasePay)).sort((a, b) => a - b),
+          companyName: getUniqueValues(combineArrays(state.filterOptions.companyName, newCompanies)).sort((a, b) =>
+            a.localeCompare(b),
+          ),
         },
       };
     },
@@ -122,6 +127,13 @@ export const jobSlice = createSlice({
         minBasePay: action.payload || -1,
       },
     }),
+    setFilterCompanyName: (state, action) => ({
+      ...state,
+      filter: {
+        ...state.filter,
+        companyName: action.payload || '',
+      },
+    }),
   },
 });
 
@@ -134,6 +146,7 @@ export const {
   setFilterLocation,
   setFilterRemote,
   setFilterMinBasePay,
+  setFilterCompanyName,
 } = jobSlice.actions;
 
 export const jobState = (state) => state.job;
