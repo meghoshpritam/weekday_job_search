@@ -82,7 +82,9 @@ function JobCard({ job }) {
               pl: 1.5,
             }}
           >
-            <Typography sx={{ fontSize: 13, fontWeight: 700, mb: 0.1 }}>{job.companyName}</Typography>
+            <Typography sx={{ fontSize: 13, fontWeight: 700, mb: 0.1 }} className="text-secondary">
+              {job.companyName}
+            </Typography>
             <Typography className="capitalized" sx={{ fontSize: 16, mb: 0.1 }}>
               {job.jobRole}
             </Typography>
@@ -91,7 +93,7 @@ function JobCard({ job }) {
             </Typography>
           </Grid>
         </Grid>
-        <Typography sx={{ fontSize: 14, fontWeight: 700, mb: 1.5 }}>
+        <Typography className="text-gray" sx={{ fontSize: 14, fontWeight: 700, mb: 1.5 }}>
           {`Estimated Salary: ${formatSalary({
             minSalary: job.minJdSalary,
             maxSalary: job.maxJdSalary,
@@ -109,7 +111,9 @@ function JobCard({ job }) {
             </button>
           </div>
         </div>
-        <Typography sx={{ fontSize: 14, fontWeight: 700 }}>Minimum Experience:</Typography>
+        <Typography className="text-secondary" sx={{ fontSize: 14, fontWeight: 700 }}>
+          Minimum Experience:
+        </Typography>
         <Typography sx={{ fontSize: 14 }}>{formatExperience({ minExp: job.minExp, maxExp: job.maxExp })}</Typography>
       </CardContent>
       {/* <CardActions>

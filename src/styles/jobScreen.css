@@ -1,6 +1,21 @@
 :root {
   --color-primary: #55efc3;
   --color-secondary: #4943da;
+  --color-text-primary: #000000de;
+  --color-text-secondary: #8b8b8b;
+  --color-text-gray: #4d596a;
+}
+
+html {
+  color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-gray {
+  color: var(--color-text-gray);
 }
 
 .img-container {
