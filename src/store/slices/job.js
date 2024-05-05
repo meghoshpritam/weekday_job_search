@@ -5,7 +5,7 @@ const initialState = {
   loading: true,
   availableNumberOfJobs: 0,
   filter: {
-    minExperience: '',
+    minExperience: -1,
     companyName: '',
     location: '',
     remote: '',
@@ -44,7 +44,15 @@ export const jobSlice = createSlice({
         return acc;
       }, {});
 
-      const newJobs = action.payload?.jobs?.filter((job) => !jobIdsMap[job.jdUid]) || [];
+      let maxExp = state.filterOptions.minExperience?.[state.filterOptions.minExperience.length - 1] || 1;
+      const newJobs =
+        action.payload?.jobs?.filter((job) => {
+          if (job.minExp > maxExp) {
+            maxExp = job.minExp;
+          }
+
+          return !jobIdsMap[job.jdUid];
+        }) || [];
 
       const newRoles = newJobs.map((job) => job.jobRole.toLowerCase());
 
@@ -55,6 +63,12 @@ export const jobSlice = createSlice({
         filterOptions: {
           ...state.filterOptions,
           role: Array.from(new Set([...(state.filterOptions.role || []), ...(newRoles || [])])),
+          minExperience: Array.from(
+            {
+              length: maxExp,
+            },
+            (_, i) => i + 1,
+          ),
         },
       };
     },
@@ -65,10 +79,17 @@ export const jobSlice = createSlice({
         role: action.payload || [],
       },
     }),
+    setFilterMinExperience: (state, action) => ({
+      ...state,
+      filter: {
+        ...state.filter,
+        minExperience: action.payload || -1,
+      },
+    }),
   },
 });
 
-export const { startLoading, stopLoading, addJobs, setFilterRole } = jobSlice.actions;
+export const { startLoading, stopLoading, addJobs, setFilterRole, setFilterMinExperience } = jobSlice.actions;
 
 export const jobState = (state) => state.job;
 

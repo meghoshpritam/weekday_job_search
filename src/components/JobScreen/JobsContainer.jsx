@@ -6,29 +6,46 @@ import { JOB_LIMIT_PER_REQUEST } from '@/services/job.service';
 import JobCard from './JobCard';
 import JobCardSkeleton from './JobCardSkeleton';
 
+const filterJobs = (jobs, filter) => {
+  return (
+    jobs?.filter((job) => {
+      let show = true;
+
+      if (filter.role.length > 0) {
+        show = filter.role.includes(job.jobRole.toLowerCase());
+      }
+
+      if (show && filter.minExperience > 0) {
+        const minExp = job.minExp || job.maxExp;
+
+        show = minExp && minExp <= filter.minExperience;
+      }
+
+      return show;
+    }) || []
+  );
+};
+
 function JobsContainer() {
   const jobDetails = useSelector(jobState);
 
   return (
-    <>
-      <Grid container spacing={5}>
-        {jobDetails.jobs.map((job) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={job.jdUid}>
-            <JobCard job={job} />
-          </Grid>
-        ))}
-      </Grid>
-
+    <Grid container spacing={5}>
+      {filterJobs(jobDetails.jobs, jobDetails.filter).map((job) => (
+        <Grid item xs={12} sm={6} md={4} lg={3} key={job.jdUid}>
+          <JobCard job={job} />
+        </Grid>
+      ))}
       {jobDetails.loading && (
-        <Grid container spacing={5} sx={{ pt: 6 }}>
+        <>
           {Array.from({ length: JOB_LIMIT_PER_REQUEST }, (_, i) => i).map((index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
               <JobCardSkeleton />
             </Grid>
           ))}
-        </Grid>
+        </>
       )}
-    </>
+    </Grid>
   );
 }
 

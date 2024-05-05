@@ -1,16 +1,16 @@
 import React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { jobState, setFilterRole } from '@/reducer/job';
+import { jobState, setFilterMinExperience, setFilterRole } from '@/reducer/job';
 import { useDispatch, useSelector } from 'react-redux';
 
 function capitalizeText(text) {
-  const spites = text.split(' ');
+  const spites = text?.split(' ') || [];
   if (spites.length > 1) {
     return spites.map((split) => split[0].toUpperCase() + split.slice(1)).join(' ');
   }
 
-  return text[0].toUpperCase() + text.slice(1);
+  return (text?.[0]?.toUpperCase() || '') + (text?.slice(1) || '');
 }
 
 function SelectComponent({ label, multiple = false, sx = {}, options = [], value, onChange, ...props }) {
@@ -43,14 +43,30 @@ function JobFilters() {
         label="Role"
         sx={{
           minWidth: 140,
+          mr: 3,
         }}
         multiple
+        disabled={(jobDetails?.filterOptions?.role || [])?.length === 0}
         value={jobDetails?.filter?.role || []}
         onChange={(_, newValue) => {
           dispatch(setFilterRole(newValue));
         }}
         getOptionLabel={(option) => capitalizeText(option)}
         options={jobDetails?.filterOptions?.role || []}
+      />
+
+      <SelectComponent
+        label="Experience"
+        sx={{
+          minWidth: 140,
+        }}
+        disabled={(jobDetails?.filterOptions?.minExperience || [])?.length === 0}
+        value={jobDetails?.filter?.minExperience || -1}
+        onChange={(_, newValue) => {
+          dispatch(setFilterMinExperience(newValue));
+        }}
+        getOptionLabel={(option) => (option === -1 ? '' : `${option} years`)}
+        options={jobDetails?.filterOptions?.minExperience || []}
       />
     </div>
   );
