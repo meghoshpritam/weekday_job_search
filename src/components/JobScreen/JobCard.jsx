@@ -3,8 +3,8 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import BoltIcon from '@mui/icons-material/Bolt';
 import JobDescriptionDIalog from './JobDescriptionDIalog';
 
 const formatCurrencyByCountryCode = (salary, countryCode) => {
@@ -64,7 +64,12 @@ function JobCard({ job }) {
   };
 
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card
+      sx={{
+        minWidth: 275,
+      }}
+      className="job-card"
+    >
       <CardContent>
         <Grid
           container
@@ -116,9 +121,17 @@ function JobCard({ job }) {
         </Typography>
         <Typography sx={{ fontSize: 14 }}>{formatExperience({ minExp: job.minExp, maxExp: job.maxExp })}</Typography>
       </CardContent>
-      {/* <CardActions>
-  <Button size="small">Learn More</Button>
-</CardActions> */}
+      <CardActions
+        sx={{
+          paddingLeft: '1rem',
+          paddingRight: '1rem',
+        }}
+      >
+        <a href={job.jdLink} className="easy-apply-button">
+          <BoltIcon sx={{ fontSize: 20, mr: 0.8 }} />
+          Easy Apply
+        </a>
+      </CardActions>
 
       <JobDescriptionDIalog
         jobDescription={job.jobDetailsFromCompany}
