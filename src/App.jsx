@@ -10,9 +10,11 @@ function App() {
 
   useEffect(() => {
     dispatch(startLoading());
-    getJobs()
+    getJobs({
+      limit: 12,
+      offset: 0,
+    })
       .then((data) => {
-        console.log('📢[App.jsx:15]: data: ', data);
         dispatch(
           addJobs({
             jobs: data.jdList,

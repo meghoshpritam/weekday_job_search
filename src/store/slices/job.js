@@ -28,11 +28,21 @@ export const jobSlice = createSlice({
       ...state,
       loading: false,
     }),
-    addJobs: (state, action) => ({
-      ...state,
-      jobs: [...state.jobs, ...(action.payload?.jobs || [])],
-      availableNumberOfJobs: action.payload.availableNumberOfJobs || state.availableNumberOfJobs || 0,
-    }),
+    addJobs: (state, action) => {
+      const { jobs } = state;
+      const jobIdsMap = jobs.reduce((acc, job) => {
+        acc[job.jdUid] = true;
+        return acc;
+      }, {});
+
+      const newJobs = action.payload?.jobs?.filter((job) => !jobIdsMap[job.jdUid]) || [];
+
+      return {
+        ...state,
+        jobs: [...state.jobs, ...newJobs],
+        availableNumberOfJobs: action.payload.availableNumberOfJobs || state.availableNumberOfJobs || 0,
+      };
+    },
   },
 });
 
