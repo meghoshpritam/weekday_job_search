@@ -55,7 +55,7 @@ function JobScreen() {
   return (
     <>
       <JobFilters />
-      <JobsContainer />;
+      <JobsContainer />
     </>
   );
 }

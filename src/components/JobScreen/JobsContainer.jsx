@@ -21,6 +21,10 @@ const filterJobs = (jobs, filter) => {
         show = minExp && minExp <= filter.minExperience;
       }
 
+      if (show && filter.location.length > 0) {
+        show = filter.location.includes(job.location.toLowerCase());
+      }
+
       return show;
     }) || []
   );
