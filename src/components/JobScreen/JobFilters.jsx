@@ -73,8 +73,6 @@ function JobFilters() {
   const jobDetails = useSelector(jobState);
   const dispatch = useDispatch();
 
-  console.log('📢[JobFilters.jsx:29]: jobDetails: ', jobDetails.filter, jobDetails.filterOptions);
-
   return (
     <div className="job-filter-container">
       <SelectComponent

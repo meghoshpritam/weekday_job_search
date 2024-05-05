@@ -53,10 +53,10 @@ function JobScreen() {
   }, []);
 
   return (
-    <>
+    <div className="min-h-screen">
       <JobFilters />
       <JobsContainer />
-    </>
+    </div>
   );
 }
 

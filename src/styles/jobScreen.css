@@ -7,6 +7,10 @@
   --color-orange: #ff822d;
 }
 
+.min-h-screen {
+  min-height: 100vh;
+}
+
 .job-card:hover {
   transform: scale(1.02);
   transition-timing-function: ease-in-out;
