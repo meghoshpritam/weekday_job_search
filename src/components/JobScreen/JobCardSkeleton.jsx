@@ -40,7 +40,7 @@ function JobCardSkeleton() {
         <div className="skeleton job-description-skeleton" />
         <div className="skeleton job-description-skeleton" />
         <div className="skeleton job-description-skeleton" />
-        <Typography className="text-secondary" sx={{ fontSize: 14, fontWeight: 700 }}>
+        <Typography className="text-secondary" sx={{ fontSize: 14, mt: 1.5, fontWeight: 700 }}>
           Minimum Experience:
         </Typography>
         <Typography className="skeleton experience-skeleton" sx={{ fontSize: 14 }} />

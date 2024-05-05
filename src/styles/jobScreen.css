@@ -178,3 +178,16 @@ html {
     opacity: 0.5;
   }
 }
+
+.job-filter-container {
+  display: flex;
+  align-items: center;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 100;
+  border-bottom: 1px solid #e0e0e0;
+}

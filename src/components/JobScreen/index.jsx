@@ -5,6 +5,7 @@ import { stopLoading, startLoading, addJobs } from '@/reducer/job';
 import JobsContainer from '@/components/JobScreen/JobsContainer';
 import reduxStore from '../../store';
 import '@/styles/jobScreen.css';
+import JobFilters from './JobFilters';
 
 function JobScreen() {
   const dispatch = useDispatch();
@@ -51,7 +52,12 @@ function JobScreen() {
     return () => window.removeEventListener('scroll', onScrollLoadJobs);
   }, []);
 
-  return <JobsContainer />;
+  return (
+    <>
+      <JobFilters />
+      <JobsContainer />;
+    </>
+  );
 }
 
 export default JobScreen;

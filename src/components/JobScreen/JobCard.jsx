@@ -116,7 +116,7 @@ function JobCard({ job }) {
             </button>
           </div>
         </div>
-        <Typography className="text-secondary" sx={{ fontSize: 14, fontWeight: 700 }}>
+        <Typography className="text-secondary" sx={{ fontSize: 14, mt: 1.5, fontWeight: 700 }}>
           Minimum Experience:
         </Typography>
         <Typography sx={{ fontSize: 14 }}>{formatExperience({ minExp: job.minExp, maxExp: job.maxExp })}</Typography>

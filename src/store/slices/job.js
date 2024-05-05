@@ -10,7 +10,16 @@ const initialState = {
     location: '',
     remote: '',
     techStack: '',
-    role: '',
+    role: [],
+    minBasePay: '',
+  },
+  filterOptions: {
+    minExperience: [],
+    companyName: '',
+    location: '',
+    remote: '',
+    techStack: '',
+    role: [],
     minBasePay: '',
   },
   error: '',
@@ -37,16 +46,29 @@ export const jobSlice = createSlice({
 
       const newJobs = action.payload?.jobs?.filter((job) => !jobIdsMap[job.jdUid]) || [];
 
+      const newRoles = newJobs.map((job) => job.jobRole.toLowerCase());
+
       return {
         ...state,
         jobs: [...state.jobs, ...newJobs],
         availableNumberOfJobs: action.payload.availableNumberOfJobs || state.availableNumberOfJobs || 0,
+        filterOptions: {
+          ...state.filterOptions,
+          role: Array.from(new Set([...(state.filterOptions.role || []), ...(newRoles || [])])),
+        },
       };
     },
+    setFilterRole: (state, action) => ({
+      ...state,
+      filter: {
+        ...state.filter,
+        role: action.payload || [],
+      },
+    }),
   },
 });
 
-export const { startLoading, stopLoading, addJobs } = jobSlice.actions;
+export const { startLoading, stopLoading, addJobs, setFilterRole } = jobSlice.actions;
 
 export const jobState = (state) => state.job;
 
