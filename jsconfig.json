@@ -10,12 +10,5 @@
       "@/reducer/*": ["./src/store/slices/*"]
     }
   },
-  "include": [
-    "./src/components/**/*",
-    "./src/store/**/*",
-    "./src/styles/**/*",
-    "./src/pages/**/*",
-    "./src/services/**/*",
-    "./src/helpers/**/*"
-  ]
+  "include": ["./src/**/*"]
 }
