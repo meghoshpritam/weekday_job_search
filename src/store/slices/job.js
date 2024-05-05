@@ -11,7 +11,7 @@ const initialState = {
     remote: '',
     techStack: '',
     role: [],
-    minBasePay: '',
+    minBasePay: -1,
   },
   filterOptions: {
     minExperience: [],
@@ -20,10 +20,14 @@ const initialState = {
     remote: ['remote', 'on-site'],
     techStack: '',
     role: [],
-    minBasePay: '',
+    minBasePay: [],
   },
   error: '',
 };
+
+const createNElemArray = (n) => Array.from({ length: n }, (_, i) => i + 1);
+const getUniqueValues = (arr) => Array.from(new Set(arr));
+const combineArrays = (arr1, arr2) => [...(arr1 || []), ...(arr2 || [])];
 
 export const jobSlice = createSlice({
   name: 'job',
@@ -52,6 +56,7 @@ export const jobSlice = createSlice({
       const newRoles = [];
       const newLocations = [];
       let maxExp = state.filterOptions.minExperience?.[state.filterOptions.minExperience.length - 1] || 1;
+      const minBasePay = [];
 
       // eslint-disable-next-line no-restricted-syntax
       for (const job of newJobs) {
@@ -61,6 +66,10 @@ export const jobSlice = createSlice({
         if (job.minExp && job.minExp > maxExp) {
           maxExp = job.minExp;
         }
+
+        if (job.minJdSalary && !minBasePay.includes(job.minJdSalary)) {
+          minBasePay.push(job.minJdSalary);
+        }
       }
 
       return {
@@ -69,16 +78,12 @@ export const jobSlice = createSlice({
         availableNumberOfJobs: action.payload.availableNumberOfJobs || state.availableNumberOfJobs || 0,
         filterOptions: {
           ...state.filterOptions,
-          role: Array.from(new Set([...(state.filterOptions.role || []), ...(newRoles || [])])),
-          location: Array.from(new Set([...(state.filterOptions.location || []), ...(newLocations || [])])).filter(
-            (location) => location !== 'remote',
-          ),
-          minExperience: Array.from(
-            {
-              length: maxExp,
-            },
-            (_, i) => i + 1,
-          ),
+          role: getUniqueValues(combineArrays(state.filterOptions.role, newRoles)).sort((a, b) => a.localeCompare(b)),
+          location: getUniqueValues(combineArrays(state.filterOptions.location, newLocations))
+            .filter((location) => location !== 'remote')
+            .sort((a, b) => a.localeCompare(b)),
+          minExperience: createNElemArray(maxExp),
+          minBasePay: getUniqueValues(combineArrays(state.filterOptions.minBasePay, minBasePay)).sort((a, b) => a - b),
         },
       };
     },
@@ -110,6 +115,13 @@ export const jobSlice = createSlice({
         remote: action.payload || '',
       },
     }),
+    setFilterMinBasePay: (state, action) => ({
+      ...state,
+      filter: {
+        ...state.filter,
+        minBasePay: action.payload || -1,
+      },
+    }),
   },
 });
 
@@ -121,6 +133,7 @@ export const {
   setFilterMinExperience,
   setFilterLocation,
   setFilterRemote,
+  setFilterMinBasePay,
 } = jobSlice.actions;
 
 export const jobState = (state) => state.job;

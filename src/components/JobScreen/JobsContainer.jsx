@@ -32,6 +32,11 @@ const filterJobs = (jobs, filter) => {
           show = job.location.toLowerCase() !== 'remote';
         }
       }
+
+      if (show && filter.minBasePay > 0) {
+        show = job.minJdSalary && job.minJdSalary >= filter.minBasePay;
+      }
+
       return show;
     }) || []
   );

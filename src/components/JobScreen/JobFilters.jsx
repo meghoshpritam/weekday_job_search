@@ -1,7 +1,14 @@
 import React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { jobState, setFilterLocation, setFilterMinExperience, setFilterRemote, setFilterRole } from '@/reducer/job';
+import {
+  jobState,
+  setFilterLocation,
+  setFilterMinBasePay,
+  setFilterMinExperience,
+  setFilterRemote,
+  setFilterRole,
+} from '@/reducer/job';
 import { useDispatch, useSelector } from 'react-redux';
 
 function capitalizeText(text) {
@@ -99,6 +106,21 @@ function JobFilters() {
         }}
         getOptionLabel={(option) => capitalizeText(option)}
         options={jobDetails?.filterOptions?.remote || []}
+      />
+
+      <SelectComponent
+        label="Min Base Pay"
+        sx={{
+          minWidth: 160,
+          mr: 3,
+        }}
+        disabled={(jobDetails?.filterOptions?.minBasePay || [])?.length === 0}
+        value={jobDetails?.filter?.minBasePay || -1}
+        onChange={(_, newValue) => {
+          dispatch(setFilterMinBasePay(newValue));
+        }}
+        getOptionLabel={(option) => (option === -1 ? '' : `${option}`)}
+        options={jobDetails?.filterOptions?.minBasePay || []}
       />
     </div>
   );
