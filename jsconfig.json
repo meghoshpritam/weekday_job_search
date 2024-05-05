@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["./src/components/*"],
+      "@/pages/*": ["./src/pages/*"],
+      "@/services/*": ["./src/services/*"],
+      "@/helpers/*": ["./src/helpers/*"],
+      "@/styles/*": ["./src/styles/*"],
+      "@/store/*": ["./src/store/*"]
+    }
+  },
+  "include": [
+    "./src/components/**/*",
+    "./src/store/**/*",
+    "./src/styles/**/*",
+    "./src/pages/**/*",
+    "./src/services/**/*",
+    "./src/helpers/**/*"
+  ]
+}
