@@ -1,7 +1,7 @@
+import React, { useEffect } from 'react';
 import Container from '@mui/material/Container';
-import { useEffect } from 'react';
-import { getJobs } from '@/services/job.service';
 import { useDispatch } from 'react-redux';
+import { getJobs } from '@/services/job.service';
 import { stopLoading, startLoading } from '@/reducer/job';
 import JobsContainer from '@/components/JobsContainer';
 
@@ -11,7 +11,9 @@ function App() {
   useEffect(() => {
     dispatch(startLoading());
     getJobs()
-      .then((data) => {})
+      .then((data) => {
+        console.log('📢[App.jsx:15]: data: ', data);
+      })
       .catch((error) => {})
       .finally(() => {
         dispatch(stopLoading());

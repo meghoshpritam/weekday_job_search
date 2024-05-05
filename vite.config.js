@@ -1,9 +1,10 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import jsConfig from './jsconfig.json';
 
-const createViteAliasFromJsConfig = (jsConfig) => {
-  return Object.entries(jsConfig.compilerOptions.paths).reduce((acc, [key, [value]]) => {
+const createViteAliasFromJsConfig = (jsConfiguration) => {
+  return Object.entries(jsConfiguration.compilerOptions.paths).reduce((acc, [key, [value]]) => {
     acc[key.replace(/\/\*$/g, '')] = value.replace(/(^\.)|(\/\*$)/g, '');
     return acc;
   }, {});
