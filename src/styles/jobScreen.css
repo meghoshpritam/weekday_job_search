@@ -114,3 +114,67 @@ html {
 .easy-apply-button svg {
   color: var(--color-orange);
 }
+
+.image-skeleton {
+  height: 3.5rem;
+  width: 100%;
+  background-color: rgb(0, 0, 0, 0.08);
+}
+
+.job-description-skeleton {
+  height: 1rem;
+  margin-bottom: 0.5rem;
+  background-color: rgb(0, 0, 0, 0.08);
+  width: 100%;
+}
+
+.company-name-skeleton {
+  height: 0.9rem;
+  background-color: rgb(0, 0, 0, 0.08);
+  width: 80%;
+}
+
+.role-skeleton {
+  height: 1rem;
+  background-color: rgb(0, 0, 0, 0.08);
+  width: 60%;
+}
+
+.location-skeleton {
+  height: 0.7rem;
+  background-color: rgb(0, 0, 0, 0.08);
+  width: 40%;
+}
+
+.salary-skeleton {
+  height: 0.7rem;
+  background-color: rgb(0, 0, 0, 0.08);
+  width: 25%;
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+.experience-skeleton {
+  height: 1rem;
+  background-color: rgb(0, 0, 0, 0.08);
+  width: 40%;
+}
+
+.easy-apply-button-skeleton {
+  height: 1.5rem;
+  cursor: default;
+}
+
+.skeleton {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

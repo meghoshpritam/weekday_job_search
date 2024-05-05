@@ -4,7 +4,7 @@ import JobScreen from './components/JobScreen';
 
 function App() {
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={{ pt: 6, pb: 10 }}>
       <JobScreen />
     </Container>
   );

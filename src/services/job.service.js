@@ -1,6 +1,8 @@
 import { BASE_URL } from '.';
 
-export const getJobs = async ({ limit = 10, offset = 0 } = {}) => {
+export const JOB_LIMIT_PER_REQUEST = 12;
+
+export const getJobs = async ({ limit = JOB_LIMIT_PER_REQUEST, offset = 0 } = {}) => {
   const getJobHeader = new Headers();
   getJobHeader.append('Content-Type', 'application/json');
 

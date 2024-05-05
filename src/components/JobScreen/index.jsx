@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getJobs } from '@/services/job.service';
+import { JOB_LIMIT_PER_REQUEST, getJobs } from '@/services/job.service';
 import { stopLoading, startLoading, addJobs } from '@/reducer/job';
 import JobsContainer from '@/components/JobScreen/JobsContainer';
 import reduxStore from '../../store';
 import '@/styles/jobScreen.css';
-
-const JOB_LIMIT_PER_REQUEST = 12;
 
 function JobScreen() {
   const dispatch = useDispatch();
