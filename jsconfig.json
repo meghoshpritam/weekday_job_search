@@ -7,7 +7,7 @@
       "@/services/*": ["./src/services/*"],
       "@/helpers/*": ["./src/helpers/*"],
       "@/styles/*": ["./src/styles/*"],
-      "@/store/*": ["./src/store/*"]
+      "@/reducer/*": ["./src/store/slices/*"]
     }
   },
   "include": [
