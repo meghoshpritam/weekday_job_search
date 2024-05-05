@@ -38,6 +38,16 @@ function JobScreen() {
 
     if (!jobDetails.loading) {
       await fetchJobs(jobDetails.jobs.length);
+      if (
+        jobDetails.filter.minExperience !== -1 ||
+        jobDetails.filter.companyName.length !== 0 ||
+        jobDetails.filter.location.length !== 0 ||
+        jobDetails.filter.remote !== '' ||
+        jobDetails.filter.role.length !== 0 ||
+        jobDetails.filter.minBasePay !== -1
+      ) {
+        window.scrollTo(0, document.documentElement.scrollHeight - window.innerHeight - 20);
+      }
     }
 
     if (jobDetails.jobs.length >= jobDetails.availableNumberOfJobs) {

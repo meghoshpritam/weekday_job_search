@@ -29,3 +29,7 @@ npm start
 ```
 
 6. Open your browser and navigate to [http://localhost:3000](http://localhost:3000)
+
+### Missing Features
+
+- [ ] The filter by tech stack is not implemented as there is no field in the API response to filter by tech stack.

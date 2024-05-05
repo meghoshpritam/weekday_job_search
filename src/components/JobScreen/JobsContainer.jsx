@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import { jobState } from '@/reducer/job';
 import { JOB_LIMIT_PER_REQUEST } from '@/services/job.service';
 import { searchStringInArray } from '@/helpers/stringSearch.helper';
+import { Typography } from '@mui/material';
 import JobCard from './JobCard';
 import JobCardSkeleton from './JobCardSkeleton';
 
@@ -49,10 +50,11 @@ const filterJobs = (jobs, filter) => {
 
 function JobsContainer() {
   const jobDetails = useSelector(jobState);
+  const jobsToShow = filterJobs(jobDetails.jobs, jobDetails.filter);
 
   return (
     <Grid container spacing={5}>
-      {filterJobs(jobDetails.jobs, jobDetails.filter).map((job) => (
+      {jobsToShow.map((job) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={job.jdUid}>
           <JobCard job={job} />
         </Grid>
@@ -66,6 +68,38 @@ function JobsContainer() {
           ))}
         </>
       )}
+      {jobDetails.jobs.length > 0 && jobsToShow.length === 0 && !jobDetails.loading && (
+        <Grid item xs={12}>
+          <Typography
+            textAlign="center"
+            sx={{
+              fontWeight: 500,
+              fontSize: 14,
+              mt: 5,
+              mb: 2,
+            }}
+          >
+            No Jobs Found
+          </Typography>
+        </Grid>
+      )}
+      {jobDetails.jobs.length > 0 &&
+        jobsToShow.length !== 0 &&
+        jobDetails.jobs.length >= jobDetails.availableNumberOfJobs && (
+          <Grid item xs={12}>
+            <Typography
+              textAlign="center"
+              sx={{
+                fontWeight: 500,
+                fontSize: 14,
+                mt: 5,
+                mb: 2,
+              }}
+            >
+              No More Jobs Available
+            </Typography>
+          </Grid>
+        )}
     </Grid>
   );
 }
