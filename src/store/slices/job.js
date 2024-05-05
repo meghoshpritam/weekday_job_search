@@ -17,7 +17,7 @@ const initialState = {
     minExperience: [],
     companyName: '',
     location: [],
-    remote: '',
+    remote: ['remote', 'on-site'],
     techStack: '',
     role: [],
     minBasePay: '',
@@ -70,7 +70,9 @@ export const jobSlice = createSlice({
         filterOptions: {
           ...state.filterOptions,
           role: Array.from(new Set([...(state.filterOptions.role || []), ...(newRoles || [])])),
-          location: Array.from(new Set([...(state.filterOptions.location || []), ...(newLocations || [])])),
+          location: Array.from(new Set([...(state.filterOptions.location || []), ...(newLocations || [])])).filter(
+            (location) => location !== 'remote',
+          ),
           minExperience: Array.from(
             {
               length: maxExp,
@@ -101,11 +103,25 @@ export const jobSlice = createSlice({
         location: action.payload || [],
       },
     }),
+    setFilterRemote: (state, action) => ({
+      ...state,
+      filter: {
+        ...state.filter,
+        remote: action.payload || '',
+      },
+    }),
   },
 });
 
-export const { startLoading, stopLoading, addJobs, setFilterRole, setFilterMinExperience, setFilterLocation } =
-  jobSlice.actions;
+export const {
+  startLoading,
+  stopLoading,
+  addJobs,
+  setFilterRole,
+  setFilterMinExperience,
+  setFilterLocation,
+  setFilterRemote,
+} = jobSlice.actions;
 
 export const jobState = (state) => state.job;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { jobState, setFilterLocation, setFilterMinExperience, setFilterRole } from '@/reducer/job';
+import { jobState, setFilterLocation, setFilterMinExperience, setFilterRemote, setFilterRole } from '@/reducer/job';
 import { useDispatch, useSelector } from 'react-redux';
 
 function capitalizeText(text) {
@@ -74,6 +74,7 @@ function JobFilters() {
         label="Location"
         sx={{
           minWidth: 140,
+          mr: 3,
         }}
         multiple
         disabled={(jobDetails?.filterOptions?.location || [])?.length === 0}
@@ -83,6 +84,21 @@ function JobFilters() {
         }}
         getOptionLabel={(option) => capitalizeText(option)}
         options={jobDetails?.filterOptions?.location || []}
+      />
+
+      <SelectComponent
+        label="Remote"
+        sx={{
+          minWidth: 140,
+          mr: 3,
+        }}
+        disabled={(jobDetails?.filterOptions?.remote || [])?.length === 0}
+        value={jobDetails?.filter?.remote || ''}
+        onChange={(_, newValue) => {
+          dispatch(setFilterRemote(newValue));
+        }}
+        getOptionLabel={(option) => capitalizeText(option)}
+        options={jobDetails?.filterOptions?.remote || []}
       />
     </div>
   );

@@ -25,6 +25,13 @@ const filterJobs = (jobs, filter) => {
         show = filter.location.includes(job.location.toLowerCase());
       }
 
+      if (show && filter.remote) {
+        if (filter.remote === 'remote') {
+          show = job.location.toLowerCase() === 'remote';
+        } else {
+          show = job.location.toLowerCase() !== 'remote';
+        }
+      }
       return show;
     }) || []
   );
